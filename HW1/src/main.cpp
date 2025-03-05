@@ -30,22 +30,14 @@ void print_G() {  // for debugging
     }
 }
 
-int TSP(int i, int mask) {
-    int ans = inf;
+void print_all_path(int i, int mask) {
     bool end = true, start = true;
-    for (int j = 0; j < gn; ++j) {
+    for (int j = 1; j < gn; ++j) {
         if (mask & (1 << j)) {
             start = false;
         }
         else{
             end = false;
-        }
-    }
-    if(i==0){
-        if(end){
-            for(auto& e:path){cout<<vid_to_name[e]<<" ";}
-            cout<<endl;
-            return 0;
         }
     }
     bool fnd = false;
@@ -54,38 +46,19 @@ int TSP(int i, int mask) {
         if (vmask & mask) {
             continue;  // visited
         }
+        if(nei.v==0&&(end==false)){continue;}
         fnd = true;
         path.push_back(nei.v);
-        ans = min(ans, TSP(nei.v, mask + vmask) + nei.w);
+        print_all_path(nei.v, mask + vmask);
         path.pop_back();
     }
     if(!fnd){
-        for(auto& e:path){
-            cout<<vid_to_name[e]<<" ";
-        }
+        for(auto& e:path){cout<<vid_to_name[e]<<" ";}
         cout<<endl;
     }
-    return ans;
+    return;
 }
-void find_path(int i, int mask, vector<int>& path) {
-    int mn = inf, mn_i = -1;
-    for (auto& nei : G[i]) {
-        int vmask = (1 << nei.v);
-        if (vmask & mask) {
-            continue;  // visited
-        }
-        int val = TSP(nei.v, mask + vmask) + nei.w;
-        if (val < mn) {
-            mn = val;
-            mn_i = nei.v;
-        }
-    }
-    if (mn_i == -1) {
-        return;
-    }
-    int v = mn_i, vmask = (1 << v);
-    find_path(v, mask + vmask, path);
-}
+
 void read_graph_from_file(const string& filename) {
     ifstream infile(filename);
     if (!infile) {
@@ -130,11 +103,10 @@ void read_graph_from_file(const string& filename) {
 int main(int argc, char* argv[]) {
     // Initialization
     G.resize(mxn);
-    memset(mem, -1, sizeof(mem));
     // Read input file
     string filename = argv[1];
     read_graph_from_file(filename);
     path.push_back(0);
-    int res = TSP(0, 0);
+    print_all_path(0, 0);
     path.pop_back();
 }
