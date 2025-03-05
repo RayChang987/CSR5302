@@ -13,6 +13,7 @@ using namespace std;
 vector<vector<edge_t>> G;
 map<string, int> vname_to_id;
 map<int, string> vid_to_name;
+vector<int> path;
 int gn = 0;
 int mem[mxn][(1 << mxn)];
 void print_G() {  // for debugging
@@ -30,32 +31,43 @@ void print_G() {  // for debugging
 }
 
 int TSP(int i, int mask) {
-    if (mem[i][mask] != -1) {
-        return mem[i][mask];
-    }
     int ans = inf;
-    bool check = true;
-
+    bool end = true, start = true;
     for (int j = 0; j < gn; ++j) {
         if (mask & (1 << j)) {
-            continue;
+            start = false;
         }
-        check = false;
+        else{
+            end = false;
+        }
     }
-    if (i == 0 && check) {
-        return mem[i][mask] = 0;
+    if(i==0){
+        if(end){
+            for(auto& e:path){cout<<vid_to_name[e]<<" ";}
+            cout<<endl;
+            return 0;
+        }
     }
+    bool fnd = false;
     for (auto& nei : G[i]) {
         int vmask = (1 << nei.v);
         if (vmask & mask) {
             continue;  // visited
         }
+        fnd = true;
+        path.push_back(nei.v);
         ans = min(ans, TSP(nei.v, mask + vmask) + nei.w);
+        path.pop_back();
     }
-    return mem[i][mask] = ans;
+    if(!fnd){
+        for(auto& e:path){
+            cout<<vid_to_name[e]<<" ";
+        }
+        cout<<endl;
+    }
+    return ans;
 }
 void find_path(int i, int mask, vector<int>& path) {
-    path.push_back(i);
     int mn = inf, mn_i = -1;
     for (auto& nei : G[i]) {
         int vmask = (1 << nei.v);
@@ -122,11 +134,7 @@ int main(int argc, char* argv[]) {
     // Read input file
     string filename = argv[1];
     read_graph_from_file(filename);
-    vector<int> path;
+    path.push_back(0);
     int res = TSP(0, 0);
-    find_path(0, 0, path);
-    for (auto& v : path) {
-        cout << vid_to_name[v] << " ";
-    }
-    cout << endl;
+    path.pop_back();
 }
