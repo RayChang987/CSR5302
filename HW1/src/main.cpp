@@ -36,7 +36,7 @@ int TSP(int i, int mask) {
     int ans = inf;
     bool check = true;
 
-    for (int j = 0; j < gn; ++j) {
+    for (int j = 1; j < gn; ++j) {
         if (mask & (1 << j)) {
             continue;
         }
@@ -50,6 +50,7 @@ int TSP(int i, int mask) {
         if (vmask & mask) {
             continue;  // visited
         }
+        if(nei.v==0&&(!check)){continue;}
         ans = min(ans, TSP(nei.v, mask + vmask) + nei.w);
     }
     return mem[i][mask] = ans;
@@ -129,4 +130,6 @@ int main(int argc, char* argv[]) {
         cout << vid_to_name[v] << " ";
     }
     cout << endl;
+    cout<<"Shortest cycle: ";
+    cout<<res<<endl;
 }
