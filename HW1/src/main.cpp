@@ -8,12 +8,14 @@
 
 #include "edge_t.h"
 const int inf = 1e9 + 7;
-const int mxn = 15;
+const int mxn = 30;
 using namespace std;
+
+string input_filename;
 vector<vector<edge_t>> G;
 map<string, int> vname_to_id;
 map<int, string> vid_to_name;
-int gn = 0;
+int gn = 0, res = 0;
 int mem[mxn][(1 << mxn)];
 void print_G() {  // for debugging
     for (int i = 0; i < gn; ++i) {
@@ -51,7 +53,11 @@ int TSP(int i, int mask) {
             continue;  // visited
         }
         if(nei.v==0&&(!check)){continue;}
-        ans = min(ans, TSP(nei.v, mask + vmask) + nei.w);
+        int v = TSP(nei.v, mask + vmask);
+        if(v!=inf){
+            ans = min(ans, TSP(nei.v, mask + vmask) + nei.w);
+        }
+        
     }
     return mem[i][mask] = ans;
 }
@@ -109,27 +115,45 @@ void read_graph_from_file(const string& filename) {
         }
         u = vname_to_id[u_str];
         v = vname_to_id[v_str];
-        // cout << u << ", " << v << endl;
         G[u].push_back({v, edge_weight});
         G[v].push_back({u, edge_weight});
     }
     infile.close();
 }
-
+void output(const vector<int>& path, const int& res, const string& output_filename){
+    std::ofstream fout(output_filename);
+    if (!fout) {
+        cerr << "Can't write the outputfile: " << output_filename << endl;
+        return;
+    }
+    else{
+        cerr<< "Write the result to: "<<output_filename<<endl;
+    }
+    if(res==inf){
+        fout<< "Can't find a valid path.."<<endl;
+    }
+    else{
+        int pn = path.size();
+        for(int i = 0; i<pn; ++i){
+            fout<<vid_to_name[path[i]];
+            if(i<pn-1){fout<<"->";}
+        }
+        fout<<endl;
+        fout<<"Answer: "<<res<<endl;
+    }
+    fout.close();
+}
 int main(int argc, char* argv[]) {
     // Initialization
     G.resize(mxn);
     memset(mem, -1, sizeof(mem));
     // Read input file
-    string filename = argv[1];
-    read_graph_from_file(filename);
-    vector<int> path;
+    string input_filename = argv[1];
+    string output_filename = (argc>=2)?argv[2]:input_filename+"_output";
+    read_graph_from_file(input_filename);
+
     int res = TSP(0, 0);
+    vector<int> path;
     find_path(0, 0, path);
-    for (auto& v : path) {
-        cout << vid_to_name[v] << " ";
-    }
-    cout << endl;
-    cout<<"Shortest cycle: ";
-    cout<<res<<endl;
+    output(path, res, output_filename);
 }
