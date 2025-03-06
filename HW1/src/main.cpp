@@ -123,7 +123,7 @@ void read_graph_from_file(const string& filename) {
 void output(const vector<int>& path, const int& res, const string& output_filename){
     std::ofstream fout(output_filename);
     if (!fout) {
-        cerr << "Can't write the outputfile: " << output_filename << endl;
+        cerr << "Can't write the output file: " << output_filename << endl;
         return;
     }
     else{
