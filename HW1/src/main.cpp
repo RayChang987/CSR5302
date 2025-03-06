@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
     memset(mem, -1, sizeof(mem));
     // Read input file
     string input_filename = argv[1];
-    string output_filename = (argc>=2)?argv[2]:input_filename+"_output";
+    string output_filename = (argc>=3)?argv[2]:input_filename+"_output";
     read_graph_from_file(input_filename);
 
     int res = TSP(0, 0);
