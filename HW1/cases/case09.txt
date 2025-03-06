@@ -1,0 +1,18 @@
+e1  64  v1  v2
+e2  378  v1  v3
+e3  519  v1  v4
+e4  434  v1  v5
+e5  200  v1  v6
+e6  318  v2  v3
+e7  455  v2  v4
+e8  375  v2  v5
+e9  164  v2  v6
+e10  170  v3  v4
+e11  265  v3  v5
+e12  344  v3  v6
+e13  223  v4  v5
+e14  428  v4  v6
+e15  273  v5  v6
+
+
+#expected answer: 1248
