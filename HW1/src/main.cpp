@@ -8,7 +8,7 @@
 
 #include "edge_t.h"
 const int inf = 1e9 + 7;
-const int mxn = 30;
+const int mxn = 20;
 using namespace std;
 
 string input_filename;
