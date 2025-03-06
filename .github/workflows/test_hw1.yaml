@@ -35,3 +35,36 @@ jobs:
           cd build
           cmake ..
           make
+          cd ../
+      - name: Run 
+        run: |
+          cd ./HW1
+          mkdir outputs
+          ./build/main ./cases/case07.txt ./outputs/case07_out
+          ./build/main ./cases/case09.txt ./outputs/case09_out
+
+          
+      - name: Test cases
+        run: |
+          cd ./HW1
+          
+          echo "Test case07"
+          echo "Your $(grep "Answer" ./outputs/case07_out)"
+          echo "Expected $(head -n 1 ./cases/case07_ans)"
+          if [[ "$(grep "Answer" ./outputs/case07_out)" != "$(head -n 1 ./cases/case07_ans)" ]]; then
+            echo "WA on case 07"
+            exit 1
+          else
+            echo "Test 07 passed!"
+          fi
+          
+          echo "Test case09"
+          echo "Your $(grep "Answer" ./outputs/case09_out)"
+          echo "Expected $(head -n 1 ./cases/case09_ans)"
+          if [[ "$(grep "Answer" ./outputs/case09_out)" != "$(head -n 1 ./cases/case09_ans)" ]]; then
+            echo "WA on case 09"
+            exit 1
+          else
+            echo "Test 09 passed!"
+          fi
+
