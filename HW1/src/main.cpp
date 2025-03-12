@@ -7,15 +7,19 @@
 #include <vector>
 
 #include "edge_t.h"
+using namespace std;
+
 const int inf = 1e9 + 7;
 const int mxn = 15;
-using namespace std;
 vector<vector<edge_t>> G;
 map<string, int> vname_to_id;
 map<int, string> vid_to_name;
 vector<int> path;
 int gn = 0;
+int tn = 0;
+int mn_path = inf;
 int mem[mxn][(1 << mxn)];
+
 void print_G() {  // for debugging
     for (int i = 0; i < gn; ++i) {
         if (!vid_to_name.count(i)) {
@@ -30,7 +34,14 @@ void print_G() {  // for debugging
     }
 }
 
-void print_all_path(int i, int mask) {
+void print_all_path(int i, int mask, int sum) {
+    tn++;
+    if(sum>=mn_path){
+        for(auto& e:path){cout<<vid_to_name[e]<<" ";}
+        cout<<" Pruned!";
+        cout<<endl;
+        return;
+    }
     bool end = true, start = true;
     for (int j = 1; j < gn; ++j) {
         if (mask & (1 << j)) {
@@ -49,10 +60,11 @@ void print_all_path(int i, int mask) {
         if(nei.v==0&&(end==false)){continue;}
         fnd = true;
         path.push_back(nei.v);
-        print_all_path(nei.v, mask + vmask);
+        print_all_path(nei.v, mask + vmask, sum+nei.w);
         path.pop_back();
     }
     if(!fnd){
+        if(i==0&&end){mn_path = min(mn_path, sum);}
         for(auto& e:path){cout<<vid_to_name[e]<<" ";}
         cout<<endl;
     }
@@ -107,6 +119,10 @@ int main(int argc, char* argv[]) {
     string filename = argv[1];
     read_graph_from_file(filename);
     path.push_back(0);
-    print_all_path(0, 0);
+    print_all_path(0, 0, 0);
     path.pop_back();
+    cout<<"Minimum path length: ";
+    cout<< mn_path<<endl;
+    cout<<"Number of tree node: ";
+    cout<< tn<<endl;
 }
