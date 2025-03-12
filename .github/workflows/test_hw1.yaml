@@ -40,8 +40,8 @@ jobs:
         run: |
           cd ./HW1
           mkdir outputs
-          ./build/main ./cases/case07.txt ./outputs/case07_out
-          ./build/main ./cases/case09.txt ./outputs/case09_out
+          ./build/group9_proj1 ./cases/case07.txt ./outputs/case07_out
+          ./build/group9_proj1 ./cases/case09.txt ./outputs/case09_out
 
           
       - name: Test cases
