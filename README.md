@@ -9,26 +9,36 @@ Run to solve TSP a problem with maximum of 20 vertices.
 
 
 
-### 使用 Makefile（如適用）
-如果你的專案包含 `Makefile`，可以直接執行：
+## Build
 
+Create a directory for build files.
 ```sh
- make
+mkdir build
+cd build
 ```
 
-若要清除編譯過的文件，使用：
-
+Create a Makefile by cmake
 ```sh
- make clean
+cmake ..
+make
 ```
 
-## Usage
-執行編譯後的程式：
+## Run
+- Execute the program without an output directory.
+    ```sh
+    ./main <input_directory>
+    ``` 
+    For example, 
+    ```sh
+    ./main ../cases/case01.txt
+    ```
+    The output file would be at the same directory and be named as `<input_directory>_output`
 
-```sh
- ./my_program
-```
+- Execute the program with an output directory.
+    ```sh
+    ./main <input_directory> <output_directory>
+    ``` 
 
-## License
-請根據專案的授權條款填寫，如 MIT、GPL、Apache 2.0 等。
+
+
 
