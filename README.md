@@ -24,21 +24,22 @@ make
 ```
 
 ## Run
-- Execute the program without an output directory.
+- A prebuilt executable file is available in the ./bin directory.
+- To execute the program without specifying an output directory:
     ```sh
     ./group9_proj1 <input_directory>
     ``` 
-    For example, 
+    For example:
     ```sh
     ./group9_proj1 ../cases/case01.txt
     ```
-    The output file would be at the same directory and be named as `<input_directory>_output`
+    The output file will be created in the same directory as the input file and will be named `<input_directory>_output`
 
-- Execute the program with an output directory.
+- To execute the program with a specified output directory:
     ```sh
     ./group9_proj1 <input_directory> <output_directory>
     ``` 
-    For example, 
+    For example: 
     ```sh
     ./group9_proj1 ../cases/case01.txt ../output.txt
     ```
