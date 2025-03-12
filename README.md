@@ -26,18 +26,22 @@ make
 ## Run
 - Execute the program without an output directory.
     ```sh
-    ./main <input_directory>
+    ./group9_proj1 <input_directory>
     ``` 
     For example, 
     ```sh
-    ./main ../cases/case01.txt
+    ./group9_proj1 ../cases/case01.txt
     ```
     The output file would be at the same directory and be named as `<input_directory>_output`
 
 - Execute the program with an output directory.
     ```sh
-    ./main <input_directory> <output_directory>
+    ./group9_proj1 <input_directory> <output_directory>
     ``` 
+    For example, 
+    ```sh
+    ./group9_proj1 ../cases/case01.txt ../output.txt
+    ```
 
 
 
