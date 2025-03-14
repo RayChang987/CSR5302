@@ -11,13 +11,13 @@ Run to solve TSP a problem with maximum of 20 vertices.
 
 ## Build
 
-Create a directory for build files.
+Create a directory for build files:
 ```sh
 mkdir build
 cd build
 ```
 
-Create a Makefile by cmake
+Generate a Makefile using CMake:
 ```sh
 cmake ..
 make
